@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\ObatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,23 @@ use App\Http\Controllers\PegawaiController;
 |
 */
 
+//Obat
+// Create
+Route::get('/create-obat', [ObatController::class, 'createObat'])->name('create_obat');
+Route::post('/insert-obat', [ObatController::class, 'insertObat'])->name('insert_obat');
+
+// Read
+Route::get('/', [ObatController::class, 'getObat'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [ObatController::class, 'getObat'])->middleware(['auth'])->name('dashboard');
+
+// Update
+Route::patch('/save-obat/{obat_id}', [ObatController::class, 'updateObat'])->name('save_obat');
+Route::get('/update-obat/{obat_id}', [ObatController::class, 'showFormUpdate'])->name('update_obat');
+
+// Delete
+Route::delete('/delete-obat/{obat_id}', [ObatController::class, 'deleteObat'])->name('delete_obat');
+
+// Pegawai
 // Create
 Route::get('/create-pegawai', [PegawaiController::class, 'createPegawai'])->name('create');
 Route::post('/insert-pegawai', [PegawaiController::class, 'insertPegawai'])->name('insert');
@@ -33,8 +51,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Menjadi baris berikut
+// Halaman Pegawai
 Route::get('/pegawai', [PegawaiController::class, 'getPegawai'])->middleware(['auth'])->name('pegawai');
+
+// Halaman Obat
+Route::get('/obat', [ObatController::class, 'getObat'])->middleware(['auth'])->name('obat');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
